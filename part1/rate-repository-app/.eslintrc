@@ -1,5 +1,7 @@
 {
-    "plugins": ["react", "react-native"],
+    "plugins": ["react", "react-native", "@babel/plugin-proposal-optional-chaining"],
+    "presets": ["@babel/preset-env", "@babel/preset-react"],
+
     "settings": {
       "react": {
         "version": "detect"
