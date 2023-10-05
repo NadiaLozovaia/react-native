@@ -7,6 +7,7 @@ import Text from './Text';
 
 import AppBar from './AppBar';
 import SignIn from './SignIn';
+import SignOut from './SignOut';
 const styles = StyleSheet.create({
     container: {
         // marginTop: Constants.statusBarHeight,
@@ -19,13 +20,12 @@ const Main = () => {
     return (
         <View style={styles.container}>
 
-
             <AppBar />
             <Routes>
                 <Route path="/" element={<RepositoryList />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
                 <Route path="/signin" element={<SignIn />} />
-                
+                <Route path="/signout" element={<SignOut/>} />
             </Routes>
 
                 {/* <Link to="/profile">

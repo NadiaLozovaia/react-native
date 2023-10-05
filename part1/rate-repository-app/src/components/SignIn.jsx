@@ -4,6 +4,9 @@ import * as yup from 'yup';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Pressable } from 'react-native';
 import { Formik, useField } from 'formik';
+import useSignIn from '../hooks/useSignIn';
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react';
 
 const styles = StyleSheet.create({
     // separator: {
@@ -31,8 +34,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#0366d6',
         padding: 10,
         margin: 12,
-        paddingVertical: 20, 
-  
+        paddingVertical: 20,
+
 
     }
 });
@@ -47,7 +50,7 @@ const validationSchema = yup.object().shape({
         .string()
         // .min(1, 'Weight must be greater or equal to 1')
         .required('Username is required'),
-        password: yup
+    password: yup
         .string()
         // .min(0.5, 'Height must be greater or equal to 0.5')
         .required('Password is required'),
@@ -55,6 +58,7 @@ const validationSchema = yup.object().shape({
 
 
 const SignInForm = ({ onSubmit }) => {
+  
     return (
         <View style={styles.flexContainerA}>
             <FormikTextInput name="username" placeholder="Username" />
@@ -70,12 +74,25 @@ const SignInForm = ({ onSubmit }) => {
 
 
 const SignIn = () => {
-    const onSubmit = values => {
-        const username = values.username;
-        const pasword = values.password;
 
-        if (!isNaN(pasword) && !isNaN(username)) {
-            console.log(pasword, username);
+    const navigate = useNavigate()
+    const [signIn, result] = useSignIn();
+  
+    useEffect(() => {
+        if ( result.data ) {
+          const token = result.data.authenticate.accessToken
+          console.log(token, 'token')
+          navigate('/')
+        }
+      }, [result.data]) 
+  
+    const onSubmit = async (values) => {
+        const { username, password } = values;
+        try {
+            const newToken = await signIn({ username, password });  
+           
+        } catch (e) {
+            console.log(e);
         }
     };
 
