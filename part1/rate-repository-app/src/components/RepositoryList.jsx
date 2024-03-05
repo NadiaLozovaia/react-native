@@ -68,31 +68,13 @@ const repositories = [
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-
-const RepositoryList = () => {
-
-    // const { repositories } = useRepositories();
-    const { data, error, loading } = useRepositories();
-
-
-    // Get the nodes from the edges array
-    if (loading) {
-        return (
-            <View>
-                <Text>
-                    loading...
-                </Text>
-            </View>
-        )
-    }
-    const repositories = data.repositories || []
-
+export const RepositoryListContainer = ({ repositories }) => {
+    
     const repositoryNodes = repositories
-        ? repositories.edges.map(edge => edge.node)
+        ? repositories.edges.map((edge) => edge.node)
         : [];
 
     return (
-
         <FlatList
             data={repositoryNodes}
             ItemSeparatorComponent={ItemSeparator}
@@ -111,10 +93,31 @@ const RepositoryList = () => {
 
             keyExtractor={item => item.id}
         />
-
-
-
     );
+};
+
+
+
+
+
+
+const RepositoryList = () => {
+
+    // const { repositories } = useRepositories();
+    const { data, error, loading } = useRepositories();
+
+    if (loading) {
+        return (
+            <View>
+                <Text>
+                    loading...
+                </Text>
+            </View>
+        )
+    }
+    const repositories = data.repositories || []
+
+    return <RepositoryListContainer repositories={repositories} />;
 };
 
 export default RepositoryList;

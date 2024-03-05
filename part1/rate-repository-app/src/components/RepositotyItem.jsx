@@ -85,7 +85,7 @@ const RepositoryItem = ({ fullName, description,
 
     return (
 
-        <View style={styles.flexContainerA}>
+        <View  testID="repositoryItem" style={styles.flexContainerA}>
             <View style={styles.flexContainerB}>
                 <View style={styles.flexItemA} >
                     <Image style={styles.tinyLogo} source={{ uri: ownerAvatarUrl }} />
